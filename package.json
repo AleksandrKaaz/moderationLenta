@@ -1,0 +1,52 @@
+{
+  "name": "moderation-lenta",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "start": "webpack serve --hot  --node-env=development",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx --fix .",
+    "format": "prettier --write .",
+    "check-format": "prettier --check .",
+    "end-of-line-LF": "prettier --end-of-line lf --write .",
+    "build": "webpack --node-env=production",
+    "clean": "rm -rf dist"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/ui-kit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "file-saver": "^2.0.5",
+    "nanoid": "^4.0.1",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/eslint-parser": "^7.15.0",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-react": "^7.14.5",
+    "@babel/preset-typescript": "^7.22.5",
+    "@babel/runtime": "^7.15.3",
+    "@types/react-dom": "^18.2.18",
+    "babel-loader": "^9.1.2",
+    "css-loader": "^6.8.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.3",
+    "prettier": "^2.3.2",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.51.1",
+    "webpack-cli": "5.0.1",
+    "webpack-dev-server": "^4.15.1"
+  }
+}

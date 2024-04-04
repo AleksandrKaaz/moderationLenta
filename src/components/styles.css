@@ -1,0 +1,153 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f7f7f7;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+}
+
+.announcements {
+  flex: 7;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.actions {
+  width: 159px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.action {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.actionName {
+  width: 71px;
+}
+
+.actionCircle {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.green {
+  background-color: #88bd35;
+  text-align: center;
+}
+
+.orange {
+  background-color: #f7882e;
+  text-align: center;
+}
+
+.blue {
+  background-color: #1764cc;
+  text-align: center;
+}
+
+.actionHotkey {
+  color: #777777;
+}
+
+.announcement {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 24px;
+  background-color: white;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+  box-sizing: unset;
+}
+
+.announcement:focus {
+  outline: 2px solid black;
+}
+
+.announcementHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid #dddddd;
+}
+
+.hyperlink {
+  color: #1764cc;
+}
+
+.announcementHeaderRightSide {
+  display: flex;
+}
+
+.announcementHeaderRightSide::before {
+  content: '';
+  display: inline-flex;
+  height: 17px;
+  width: 17px;
+  background: url('../assets/Vector.png');
+  margin-right: 8px;
+}
+
+.announcementBody {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  gap: 8px;
+}
+
+.announcementBodyTitle {
+  font-size: 24px;
+}
+
+.announcementBodyContent {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  padding-right: 120px;
+  height: 281px;
+}
+
+.verticalLine {
+  border-left: 1px solid #e4e4e4;
+}
+
+.announcementBodyContentText {
+  flex: 1;
+  padding-top: 8px;
+  font-size: 15px;
+}
+
+.announcementBodyContentImages {
+  width: 191px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 8px;
+  overflow: overlay;
+}
+
+.forModerator {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comment {
+  display: none;
+}
