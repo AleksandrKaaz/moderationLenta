@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import '../styles.css';
-import { Announcement } from '../../types/announcement';
-import api from '../../api/announcement';
-import { AnnouncementToServer } from '../../types/announcementToServer';
+import './styles.css';
+import { Announcement } from '../types/announcement';
+import api from '../api/announcement';
+import { AnnouncementToServer } from '../types/announcementToServer';
+import { Actions } from './Actions';
 
 export const RibbonContainer = () => {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
@@ -31,6 +32,8 @@ export const RibbonContainer = () => {
           status: status,
           comment: commentElement?.innerHTML,
         });
+      } else {
+        approvedAnnouncement.status = status;
       }
     }
   };
@@ -70,16 +73,14 @@ export const RibbonContainer = () => {
 
         let labelStatus = focusedElement.querySelector('label.status');
         if (labelStatus) {
-          labelStatus.innerHTML = '';
           labelStatus.classList.value = 'status';
+          labelStatus.innerHTML = 'Одобрено';
+          labelStatus?.classList.add('green');
         }
 
         let announcementId = focusedElement?.querySelector('span.hyperlink')?.innerHTML;
 
         checkAndPushItems(announcementId, 'approved');
-
-        labelStatus.innerHTML = 'Одобрено';
-        labelStatus?.classList.add('green');
 
         const siblingArticle = focusedElement?.nextElementSibling;
         if (siblingArticle) {
@@ -118,9 +119,9 @@ export const RibbonContainer = () => {
 
         if (commentElement && commentElement.classList.contains('comment')) {
           commentElement.classList.value = '';
-        } else {
-          checkAndPushItems(announcementId, 'declined', commentElement?.innerHTML);
         }
+
+        checkAndPushItems(announcementId, 'declined');
       }
 
       if (event.code === 'Enter' && event.shiftKey === true) {
@@ -154,10 +155,8 @@ export const RibbonContainer = () => {
 
         if (commentElement && commentElement.classList.contains('comment')) {
           commentElement.classList.value = '';
-        } else {
-
-          checkAndPushItems(announcementId, 'escalated', commentElement?.innerHTML);
         }
+        checkAndPushItems(announcementId, 'escalated');
       }
 
       if (event.code === 'F7') {
@@ -168,25 +167,39 @@ export const RibbonContainer = () => {
           return;
         }
 
-        api.sendAnnouncements(announcementsToServer.current).then(
-          (response) => {
-            console.log('response: ', response);
-            alert(response.status);
-            setAnnouncements([]);
-            announcementsToServer.current = [];
-          },
-          (error) => alert(error),
-        );
+        api
+          .sendAnnouncements(announcementsToServer.current)
+          .finally(() => alert(`Отправлено: ${JSON.stringify(announcementsToServer.current)}`))
+          .then(
+            (response) => {
+              alert(`Статус ответа: ${response.status}`);
+              setAnnouncements([]);
+              announcementsToServer.current = [];
+            },
+            (error) => alert(error),
+          );
       }
     },
     [announcements],
   );
 
+  const onTextareaFocusOut = (event: FocusEvent) => {
+    let announcementId = event.target.dataset.announcementId;
+    let approvedAnnouncement = announcementsToServer.current.find(
+      (element) => element.id === +announcementId,
+    );
+    if (approvedAnnouncement) {
+      approvedAnnouncement.comment = event.target?.value || undefined;
+    }
+  };
+
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
+    document.addEventListener('focusout', onTextareaFocusOut);
 
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
+      document.removeEventListener('focusout', onTextareaFocusOut);
     };
   }, [handleKeyPress]);
 
@@ -226,35 +239,14 @@ export const RibbonContainer = () => {
               </div>
               <div className="forModerator">
                 <label className="commentLabel"></label>
-                <textarea className="comment"></textarea>
+                <textarea className="comment" data-announcement-id={announcement.id}></textarea>
                 <label className="status"></label>
               </div>
             </article>
           ))
         )}
       </section>
-      <section className="actions">
-        <article className="action">
-          <div className="actionName">Одобрить</div>
-          <div className="actionCircle green" />
-          <div className="actionHotkey">Пробел</div>
-        </article>
-        <article className="action">
-          <div className="actionName">Отклонить</div>
-          <div className="actionCircle orange" />
-          <div className="actionHotkey">Del</div>
-        </article>
-        <article className="action">
-          <div className="actionName">Эскалация</div>
-          <div className="actionCircle blue" />
-          <div className="actionHotkey">Shift+Enter</div>
-        </article>
-        <article className="action">
-          <div className="actionName">Сохранить</div>
-          <div className="actionCircle empty" />
-          <div className="actionHotkey">F7</div>
-        </article>
-      </section>
+      <Actions />
     </main>
   );
 };

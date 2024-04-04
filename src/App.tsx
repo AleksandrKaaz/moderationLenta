@@ -1,5 +1,5 @@
 import React from 'react';
-import { RibbonContainer } from './components/RibbonContainer/RibbonContainer';
+import { RibbonContainer } from './components/RibbonContainer';
 
 const App: React.FC = () => {
   return (
