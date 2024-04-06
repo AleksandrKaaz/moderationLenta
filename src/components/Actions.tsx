@@ -6,7 +6,7 @@ export const Actions = () => {
       <article className="action">
         <div className="actionName">Одобрить</div>
         <div className="actionCircle green" />
-        <div className="actionHotkey">Пробел</div>
+        <div className="actionHotkey">Shift+Space</div>
       </article>
       <article className="action">
         <div className="actionName">Отклонить</div>

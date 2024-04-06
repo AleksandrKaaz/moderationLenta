@@ -53,7 +53,7 @@ export const RibbonContainer = () => {
         }
       }
 
-      if (event.code === 'Space') {
+      if (event.code === 'Space' && event.shiftKey === true) {
         event.preventDefault();
 
         let focusedElement = document.activeElement;
